@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Painel Xits Free</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body, html {
       height: 100%;
       font-family: 'Segoe UI', Roboto, sans-serif;
@@ -18,14 +13,12 @@
       color: #e0e0ff;
       overflow: hidden;
     }
-
     #tsparticles {
       position: absolute;
       width: 100%;
       height: 100%;
       z-index: -1;
     }
-
     .container {
       position: relative;
       z-index: 10;
@@ -35,7 +28,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .painel {
       background: rgba(25, 25, 70, 0.75);
       backdrop-filter: blur(14px);
@@ -48,11 +40,7 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(124,58,237,0.25);
       transition: transform 0.4s ease;
     }
-
-    .painel:hover {
-      transform: translateY(-8px);
-    }
-
+    .painel:hover { transform: translateY(-8px); }
     h1 {
       font-size: 2.3rem;
       margin-bottom: 20px;
@@ -62,7 +50,6 @@
       color: transparent;
       text-shadow: 0 0 15px rgba(167,139,250,0.5);
     }
-
     .foto {
       width: 150px;
       height: 150px;
@@ -72,13 +59,7 @@
       border: 4px solid rgba(140, 160, 255, 0.5);
       box-shadow: 0 0 30px rgba(124,58,237,0.5);
     }
-
-    .foto img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
+    .foto img { width: 100%; height: 100%; object-fit: cover; }
     .key-input {
       width: 100%;
       padding: 16px 20px;
@@ -94,17 +75,12 @@
       outline: none;
       transition: all 0.3s;
     }
-
     .key-input:focus {
       border-color: #a78bfa;
       box-shadow: 0 0 20px rgba(167,139,250,0.6);
       background: rgba(50, 50, 100, 0.9);
     }
-
-    .key-input::placeholder {
-      color: #8888aa;
-    }
-
+    .key-input::placeholder { color: #8888aa; }
     button {
       background: linear-gradient(90deg, #7c3aed, #a78bfa, #c084fc);
       color: white;
@@ -117,21 +93,9 @@
       box-shadow: 0 8px 25px rgba(124,58,237,0.5);
       animation: pulse 2s infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-
-    button:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 35px rgba(124,58,237,0.7);
-    }
-
-    button:active {
-      transform: translateY(2px);
-    }
-
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+    button:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 12px 35px rgba(124,58,237,0.7); }
+    button:active { transform: translateY(2px); }
     #mensagem {
       margin-top: 20px;
       font-size: 1.3rem;
@@ -140,9 +104,8 @@
       opacity: 0;
       transition: opacity 0.5s;
     }
-
     .sucesso { color: #a0f0a0; text-shadow: 0 0 10px #a0f0a0; }
-    .erro    { color: #ff7070; text-shadow: 0 0 10px #ff7070; }
+    .erro { color: #ff7070; text-shadow: 0 0 10px #ff7070; }
   </style>
 </head>
 <body>
@@ -165,50 +128,47 @@
   </div>
 </div>
 
-<!-- tsParticles - versão slim mais recente e estável -->
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3/tsparticles.slim.min.js"></script>
+<!-- tsParticles - usando unpkg com @tsparticles/all (carrega tudo necessário) -->
+<script src="https://unpkg.com/@tsparticles/all@3/tsparticles.all.min.js"></script>
 <script>
-  async function initParticles() {
-    try {
-      await tsParticles.load("tsparticles", {
-        fullScreen: { enable: true, zIndex: -1 },
-        fpsLimit: 120,
-        particles: {
-          number: { value: 90, density: { enable: true, value_area: 900 } },
-          color: { value: ["#8b5cf6", "#a78bfa", "#c084fc", "#d8b4fe", "#7c3aed"] },
-          shape: { type: "circle" },
-          opacity: { value: 0.75, random: true, animation: { enable: true, speed: 1.8, minimumValue: 0.35 } },
-          size: { value: { min: 1.8, max: 5.5 }, random: true, animation: { enable: true, speed: 4 } },
-          move: {
-            enable: true,
-            speed: { min: 0.7, max: 2.5 },
-            direction: "none",
-            random: true,
-            straight: false,
-            outModes: { default: "out" },
-            attract: { enable: true, rotateX: 800, rotateY: 1600 }
-          },
-          links: {
-            enable: true,
-            distance: 160,
-            color: "#b794f4",
-            opacity: 0.65,
-            width: 1.8
-          }
-        },
-        interactivity: {
-          detectsOn: "canvas",
-          events: { onHover: { enable: true, mode: "grab" }, resize: true },
-          modes: { grab: { distance: 220, links: { opacity: 0.8 } } }
-        },
-        detectRetina: true
-      });
-    } catch (err) {
-      console.error("Erro ao carregar partículas:", err);
-    }
-  }
-
-  initParticles();
+  // Carrega as partículas
+  tsParticles.load("tsparticles", {
+    fullScreen: { enable: true, zIndex: -1 },
+    fpsLimit: 120,
+    particles: {
+      number: { value: 100, density: { enable: true, value_area: 1000 } },
+      color: { value: ["#8b5cf6", "#a78bfa", "#c084fc", "#d8b4fe", "#7c3aed", "#e0bbff"] },
+      shape: { type: "circle" },
+      opacity: { value: 0.8, random: true, animation: { enable: true, speed: 2, minimumValue: 0.4 } },
+      size: { value: { min: 2, max: 6 }, random: true, animation: { enable: true, speed: 5 } },
+      move: {
+        enable: true,
+        speed: { min: 1, max: 3 },
+        direction: "none",
+        random: true,
+        straight: false,
+        outModes: { default: "out" },
+        attract: { enable: true, rotateX: 1000, rotateY: 2000 }
+      },
+      links: {
+        enable: true,
+        distance: 180,
+        color: "#b794f4",
+        opacity: 0.7,
+        width: 2
+      }
+    },
+    interactivity: {
+      detectsOn: "canvas",
+      events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" }, resize: true },
+      modes: { grab: { distance: 250, links: { opacity: 0.9 } }, push: { quantity: 4 } }
+    },
+    detectRetina: true
+  }).then(() => {
+    console.log("Partículas carregadas com sucesso!");
+  }).catch(err => {
+    console.error("Erro ao carregar partículas:", err);
+  });
 
   function verificarKey() {
     const input = document.getElementById("keyInput");
@@ -221,14 +181,11 @@
       if (keyDigitada === "XitsFree1500") {
         msg.textContent = "Acesso liberado! ✓";
         msg.className = "sucesso";
-        // Aqui você pode adicionar redirecionamento ex: window.location = "https://seusite.com/painel-real";
       } else {
         msg.textContent = "Key errada ✗";
         msg.className = "erro";
       }
       msg.style.opacity = "1";
-
-      // Limpa mensagem após 4 segundos (opcional)
       setTimeout(() => { msg.style.opacity = "0"; }, 4000);
     }, 300);
   }
