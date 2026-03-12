@@ -17,6 +17,8 @@
       position: absolute;
       width: 100%;
       height: 100%;
+      top: 0;
+      left: 0;
       z-index: -1;
     }
     .container {
@@ -29,16 +31,16 @@
       padding: 20px;
     }
     .painel {
-      background: rgba(25, 25, 70, 0.75);
+      background: rgba(25, 25, 70, 0.8);
       backdrop-filter: blur(14px);
-      border: 1px solid rgba(120, 140, 255, 0.35);
+      border: 1px solid rgba(120, 140, 255, 0.4);
       border-radius: 20px;
       padding: 35px 40px;
       width: 100%;
       max-width: 400px;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(124,58,237,0.25);
-      transition: transform 0.4s ease;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(124,58,237,0.3);
+      transition: transform 0.4s;
     }
     .painel:hover { transform: translateY(-8px); }
     h1 {
@@ -46,9 +48,8 @@
       margin-bottom: 20px;
       background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed);
       -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 15px rgba(167,139,250,0.5);
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(167,139,250,0.6);
     }
     .foto {
       width: 150px;
@@ -64,7 +65,7 @@
       width: 100%;
       padding: 16px 20px;
       margin: 20px 0 30px;
-      background: rgba(40, 40, 90, 0.8);
+      background: rgba(40, 40, 90, 0.85);
       border: 2px solid #5a6aff;
       border-radius: 12px;
       color: #d0d8ff;
@@ -77,8 +78,8 @@
     }
     .key-input:focus {
       border-color: #a78bfa;
-      box-shadow: 0 0 20px rgba(167,139,250,0.6);
-      background: rgba(50, 50, 100, 0.9);
+      box-shadow: 0 0 20px rgba(167,139,250,0.7);
+      background: rgba(50, 50, 100, 0.95);
     }
     .key-input::placeholder { color: #8888aa; }
     button {
@@ -128,57 +129,65 @@
   </div>
 </div>
 
-<!-- tsParticles - usando unpkg com @tsparticles/all (carrega tudo necessário) -->
-<script src="https://unpkg.com/@tsparticles/all@3/tsparticles.all.min.js"></script>
+<!-- CDN oficial mais completo e estável (all inclui tudo) -->
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/all@3/tsparticles.all.min.js"></script>
+
 <script>
-  // Carrega as partículas
-  tsParticles.load("tsparticles", {
-    fullScreen: { enable: true, zIndex: -1 },
-    fpsLimit: 120,
-    particles: {
-      number: { value: 100, density: { enable: true, value_area: 1000 } },
-      color: { value: ["#8b5cf6", "#a78bfa", "#c084fc", "#d8b4fe", "#7c3aed", "#e0bbff"] },
-      shape: { type: "circle" },
-      opacity: { value: 0.8, random: true, animation: { enable: true, speed: 2, minimumValue: 0.4 } },
-      size: { value: { min: 2, max: 6 }, random: true, animation: { enable: true, speed: 5 } },
-      move: {
-        enable: true,
-        speed: { min: 1, max: 3 },
-        direction: "none",
-        random: true,
-        straight: false,
-        outModes: { default: "out" },
-        attract: { enable: true, rotateX: 1000, rotateY: 2000 }
+  // Espera o script carregar completamente
+  window.addEventListener("load", function() {
+    if (typeof tsParticles === "undefined") {
+      console.error("tsParticles NÃO carregou! Verifique internet ou bloqueador.");
+      alert("Erro: Partículas não carregaram. Abra F12 > Console e me diga o erro.");
+      return;
+    }
+
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: true, zIndex: -1 },
+      fpsLimit: 120,
+      particles: {
+        number: { value: 120, density: { enable: true, value_area: 1200 } },
+        color: { value: ["#8b5cf6", "#a78bfa", "#c084fc", "#d8b4fe", "#7c3aed"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.85, random: true, animation: { enable: true, speed: 2.5, minimumValue: 0.4 } },
+        size: { value: { min: 2, max: 7 }, random: true, animation: { enable: true, speed: 6 } },
+        move: {
+          enable: true,
+          speed: { min: 1.2, max: 3.5 },
+          direction: "none",
+          random: true,
+          straight: false,
+          outModes: { default: "out" },
+          attract: { enable: true, rotateX: 1200, rotateY: 2400 }
+        },
+        links: {
+          enable: true,
+          distance: 200,
+          color: "#b794f4",
+          opacity: 0.75,
+          width: 2.5
+        }
       },
-      links: {
-        enable: true,
-        distance: 180,
-        color: "#b794f4",
-        opacity: 0.7,
-        width: 2
-      }
-    },
-    interactivity: {
-      detectsOn: "canvas",
-      events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" }, resize: true },
-      modes: { grab: { distance: 250, links: { opacity: 0.9 } }, push: { quantity: 4 } }
-    },
-    detectRetina: true
-  }).then(() => {
-    console.log("Partículas carregadas com sucesso!");
-  }).catch(err => {
-    console.error("Erro ao carregar partículas:", err);
+      interactivity: {
+        detectsOn: "canvas",
+        events: { onHover: { enable: true, mode: "grab" }, resize: true },
+        modes: { grab: { distance: 280, links: { opacity: 0.9 } } }
+      },
+      detectRetina: true
+    }).then(() => {
+      console.log("Partículas carregadas com SUCESSO! 🌟");
+    }).catch(err => {
+      console.error("Erro ao iniciar partículas:", err);
+    });
   });
 
   function verificarKey() {
-    const input = document.getElementById("keyInput");
+    const input = document.getElementById("keyInput").value.trim();
     const msg = document.getElementById("mensagem");
-    const keyDigitada = input.value.trim();
 
     msg.style.opacity = "0";
 
     setTimeout(() => {
-      if (keyDigitada === "XitsFree1500") {
+      if (input === "XitsFree1500") {
         msg.textContent = "Acesso liberado! ✓";
         msg.className = "sucesso";
       } else {
@@ -186,7 +195,7 @@
         msg.className = "erro";
       }
       msg.style.opacity = "1";
-      setTimeout(() => { msg.style.opacity = "0"; }, 4000);
+      setTimeout(() => { msg.style.opacity = "0"; }, 5000);
     }, 300);
   }
 </script>
