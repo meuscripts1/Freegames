@@ -1,204 +1,194 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Painel Xits Free</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remove Fundo + ControlDarkDark</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #e0e0ff;
-      overflow: hidden;
-    }
-    #tsparticles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    .container {
-      position: relative;
-      z-index: 10;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
       padding: 20px;
     }
-    .painel {
-      background: rgba(25, 25, 70, 0.8);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(120, 140, 255, 0.4);
-      border-radius: 20px;
-      padding: 35px 40px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 30px rgba(124,58,237,0.3);
-      transition: transform 0.4s;
-    }
-    .painel:hover { transform: translateY(-8px); }
-    h1 {
-      font-size: 2.3rem;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 15px rgba(167,139,250,0.6);
-    }
-    .foto {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto 25px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid rgba(140, 160, 255, 0.5);
-      box-shadow: 0 0 30px rgba(124,58,237,0.5);
-    }
-    .foto img { width: 100%; height: 100%; object-fit: cover; }
-    .key-input {
-      width: 100%;
-      padding: 16px 20px;
-      margin: 20px 0 30px;
-      background: rgba(40, 40, 90, 0.85);
-      border: 2px solid #5a6aff;
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #1a1a1a;
+      padding: 30px;
       border-radius: 12px;
-      color: #d0d8ff;
-      font-family: monospace;
-      font-size: 1.4rem;
-      letter-spacing: 2px;
-      text-align: center;
-      outline: none;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .drop-zone {
+      border: 3px dashed #555;
+      padding: 60px;
+      border-radius: 12px;
+      margin: 20px 0;
+      cursor: pointer;
       transition: all 0.3s;
     }
-    .key-input:focus {
-      border-color: #a78bfa;
-      box-shadow: 0 0 20px rgba(167,139,250,0.7);
-      background: rgba(50, 50, 100, 0.95);
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: #00ff9d;
+      background: #222;
     }
-    .key-input::placeholder { color: #8888aa; }
+    img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      margin: 20px 0;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
     button {
-      background: linear-gradient(90deg, #7c3aed, #a78bfa, #c084fc);
-      color: white;
+      background: #00ff9d;
+      color: #000;
       border: none;
-      padding: 16px 50px;
-      font-size: 1.2rem;
-      border-radius: 50px;
+      padding: 14px 32px;
+      font-size: 18px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.4s;
-      box-shadow: 0 8px 25px rgba(124,58,237,0.5);
-      animation: pulse 2s infinite;
+      margin: 10px;
     }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
-    button:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 12px 35px rgba(124,58,237,0.7); }
-    button:active { transform: translateY(2px); }
-    #mensagem {
-      margin-top: 20px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      min-height: 30px;
-      opacity: 0;
-      transition: opacity 0.5s;
+    button:hover {
+      background: #00cc7a;
     }
-    .sucesso { color: #a0f0a0; text-shadow: 0 0 10px #a0f0a0; }
-    .erro { color: #ff7070; text-shadow: 0 0 10px #ff7070; }
+    .result {
+      margin-top: 30px;
+    }
+    .color-preview {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: #0a0a0a;
+      border: 2px solid #333;
+      vertical-align: middle;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>🖼️ Remove Fundo + ControlDarkDark</h1>
+    <p>Importe sua imagem e ela vai ficar com fundo <strong>ControlDarkDark</strong> <span class="color-preview"></span></p>
 
-<div id="tsparticles"></div>
-
-<div class="container">
-  <div class="painel">
-    <h1>Painel Xits Free</h1>
-    
-    <div class="foto">
-      <img src="https://i.imgur.com/EKL8XfU.png" alt="foto do painel">
+    <div id="dropZone" class="drop-zone">
+      <p>Clique aqui ou arraste a imagem</p>
+      <input type="file" id="fileInput" accept="image/*" style="display: none;">
     </div>
 
-    <input type="text" class="key-input" id="keyInput" placeholder="Digite a key aqui..." autocomplete="off">
+    <div id="previewOriginal"></div>
 
-    <button onclick="verificarKey()">Entrar com a Key</button>
+    <button id="processBtn" style="display: none;">🔄 Remover Fundo e Colocar ControlDarkDark</button>
 
-    <div id="mensagem"></div>
+    <div class="result" id="result"></div>
   </div>
-</div>
 
-<!-- CDN oficial mais completo e estável (all inclui tudo) -->
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/all@3/tsparticles.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.0/dist/browser/index.js"></script>
 
-<script>
-  // Espera o script carregar completamente
-  window.addEventListener("load", function() {
-    if (typeof tsParticles === "undefined") {
-      console.error("tsParticles NÃO carregou! Verifique internet ou bloqueador.");
-      alert("Erro: Partículas não carregaram. Abra F12 > Console e me diga o erro.");
-      return;
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const processBtn = document.getElementById('processBtn');
+    const previewOriginal = document.getElementById('previewOriginal');
+    const resultDiv = document.getElementById('result');
+
+    let currentImage = null;
+    let currentFile = null;
+
+    // Cor ControlDarkDark (bem escura)
+    const controlDarkDark = '#0a0a0a';
+
+    // Drag and drop
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handleFile);
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) processSelectedFile(file);
+    });
+
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (file) processSelectedFile(file);
     }
 
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: true, zIndex: -1 },
-      fpsLimit: 120,
-      particles: {
-        number: { value: 120, density: { enable: true, value_area: 1200 } },
-        color: { value: ["#8b5cf6", "#a78bfa", "#c084fc", "#d8b4fe", "#7c3aed"] },
-        shape: { type: "circle" },
-        opacity: { value: 0.85, random: true, animation: { enable: true, speed: 2.5, minimumValue: 0.4 } },
-        size: { value: { min: 2, max: 7 }, random: true, animation: { enable: true, speed: 6 } },
-        move: {
-          enable: true,
-          speed: { min: 1.2, max: 3.5 },
-          direction: "none",
-          random: true,
-          straight: false,
-          outModes: { default: "out" },
-          attract: { enable: true, rotateX: 1200, rotateY: 2400 }
-        },
-        links: {
-          enable: true,
-          distance: 200,
-          color: "#b794f4",
-          opacity: 0.75,
-          width: 2.5
-        }
-      },
-      interactivity: {
-        detectsOn: "canvas",
-        events: { onHover: { enable: true, mode: "grab" }, resize: true },
-        modes: { grab: { distance: 280, links: { opacity: 0.9 } } }
-      },
-      detectRetina: true
-    }).then(() => {
-      console.log("Partículas carregadas com SUCESSO! 🌟");
-    }).catch(err => {
-      console.error("Erro ao iniciar partículas:", err);
-    });
-  });
-
-  function verificarKey() {
-    const input = document.getElementById("keyInput").value.trim();
-    const msg = document.getElementById("mensagem");
-
-    msg.style.opacity = "0";
-
-    setTimeout(() => {
-      if (input === "XitsFree1500") {
-        msg.textContent = "Acesso liberado! ✓";
-        msg.className = "sucesso";
-      } else {
-        msg.textContent = "Key errada ✗";
-        msg.className = "erro";
+    function processSelectedFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione uma imagem!');
+        return;
       }
-      msg.style.opacity = "1";
-      setTimeout(() => { msg.style.opacity = "0"; }, 5000);
-    }, 300);
-  }
-</script>
 
+      currentFile = file;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentImage = e.target.result;
+        previewOriginal.innerHTML = `<img src="${currentImage}" alt="Original">`;
+        processBtn.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Processar remoção de fundo
+    processBtn.addEventListener('click', async () => {
+      if (!currentFile) return;
+
+      processBtn.textContent = '⏳ Processando... (pode demorar uns segundos)';
+      processBtn.disabled = true;
+
+      try {
+        // Remove o fundo usando biblioteca client-side
+        const imageBlob = await window.BackgroundRemoval.removeBackground(currentFile);
+
+        // Cria URL da imagem com fundo removido
+        const transparentUrl = URL.createObjectURL(imageBlob);
+
+        // Cria canvas para colocar o fundo ControlDarkDark
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+
+          // Preenche com ControlDarkDark
+          ctx.fillStyle = controlDarkDark;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Desenha a imagem sem fundo por cima
+          ctx.drawImage(img, 0, 0);
+
+          const finalUrl = canvas.toDataURL('image/png');
+
+          resultDiv.innerHTML = `
+            <h2>✅ Resultado Final</h2>
+            <img src="${finalUrl}" alt="Resultado">
+            <br><br>
+            <a href="${finalUrl}" download="imagem-control-dark-dark.png">
+              <button>⬇️ Baixar Imagem</button>
+            </a>
+          `;
+        };
+        img.src = transparentUrl;
+
+      } catch (error) {
+        console.error(error);
+        alert('Erro ao remover o fundo. Tente com outra imagem ou navegador.');
+      }
+
+      processBtn.textContent = '🔄 Remover Fundo e Colocar ControlDarkDark';
+      processBtn.disabled = false;
+    });
+  </script>
 </body>
 </html>
