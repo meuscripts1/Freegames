@@ -5,189 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Remove Fundo + ControlDarkDark</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; text-align: center; padding: 20px; margin: 0; }
+    .container { max-width: 900px; margin: 0 auto; background: #1a1a1a; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.6); }
+    h1 { margin-bottom: 10px; }
     .drop-zone {
-      border: 3px dashed #555;
-      padding: 60px;
-      border-radius: 12px;
-      margin: 20px 0;
-      cursor: pointer;
-      transition: all 0.3s;
+      border: 3px dashed #666; padding: 60px 20px; border-radius: 12px; margin: 25px 0;
+      cursor: pointer; transition: all 0.3s; background: #222;
     }
-    .drop-zone:hover, .drop-zone.dragover {
-      border-color: #00ff9d;
-      background: #222;
-    }
-    img {
-      max-width: 100%;
-      max-height: 400px;
-      border-radius: 8px;
-      margin: 20px 0;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
+    .drop-zone:hover, .drop-zone.dragover { border-color: #00ff9d; background: #2a2a2a; }
+    img { max-width: 100%; max-height: 420px; border-radius: 10px; margin: 15px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
     button {
-      background: #00ff9d;
-      color: #000;
-      border: none;
-      padding: 14px 32px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 10px;
+      background: #00ff9d; color: #000; border: none; padding: 15px 40px; font-size: 18px;
+      border-radius: 8px; cursor: pointer; margin: 15px 8px;
     }
-    button:hover {
-      background: #00cc7a;
-    }
-    .result {
-      margin-top: 30px;
-    }
-    .color-preview {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      background: #0a0a0a;
-      border: 2px solid #333;
-      vertical-align: middle;
-      border-radius: 4px;
-      margin-left: 8px;
-    }
+    button:hover { background: #00cc7a; }
+    button:disabled { background: #555; cursor: not-allowed; }
+    .loading { color: #00ff9d; font-size: 18px; margin: 20px 0; }
+    .error { color: #ff6666; margin: 20px 0; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🖼️ Remove Fundo + ControlDarkDark</h1>
-    <p>Importe sua imagem e ela vai ficar com fundo <strong>ControlDarkDark</strong> <span class="color-preview"></span></p>
+    <h1>🖼️ Remover Fundo + ControlDarkDark</h1>
+    <p>Arraste ou clique para importar a imagem • Fundo final será <strong>ControlDarkDark</strong></p>
 
     <div id="dropZone" class="drop-zone">
-      <p>Clique aqui ou arraste a imagem</p>
-      <input type="file" id="fileInput" accept="image/*" style="display: none;">
+      <p><strong>Clique aqui</strong> ou arraste a imagem (PNG ou JPG)</p>
+      <input type="file" id="fileInput" accept="image/*" style="display:none;">
     </div>
 
-    <div id="previewOriginal"></div>
+    <div id="preview"></div>
+    <button id="processBtn" style="display:none;">🔄 Remover Fundo e Aplicar ControlDarkDark</button>
 
-    <button id="processBtn" style="display: none;">🔄 Remover Fundo e Colocar ControlDarkDark</button>
-
+    <div id="status" class="loading"></div>
+    <div id="error" class="error"></div>
     <div class="result" id="result"></div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.0/dist/browser/index.js"></script>
+  <script type="module">
+    import removeBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm";
 
-  <script>
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const processBtn = document.getElementById('processBtn');
-    const previewOriginal = document.getElementById('previewOriginal');
+    const previewDiv = document.getElementById('preview');
+    const statusDiv = document.getElementById('status');
+    const errorDiv = document.getElementById('error');
     const resultDiv = document.getElementById('result');
 
-    let currentImage = null;
     let currentFile = null;
+    const CONTROL_DARK = '#0a0a0a';
 
-    // Cor ControlDarkDark (bem escura)
-    const controlDarkDark = '#0a0a0a';
-
-    // Drag and drop
     dropZone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', handleFile);
+    fileInput.addEventListener('change', e => e.target.files[0] && handleFile(e.target.files[0]));
 
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', (e) => {
+    dropZone.addEventListener('drop', e => {
       e.preventDefault();
       dropZone.classList.remove('dragover');
-      const file = e.dataTransfer.files[0];
-      if (file) processSelectedFile(file);
+      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
     });
 
-    function handleFile(e) {
-      const file = e.target.files[0];
-      if (file) processSelectedFile(file);
-    }
-
-    function processSelectedFile(file) {
+    function handleFile(file) {
+      errorDiv.textContent = '';
       if (!file.type.startsWith('image/')) {
-        alert('Por favor, selecione uma imagem!');
+        errorDiv.textContent = '❌ Por favor, selecione uma imagem (PNG ou JPG)';
         return;
       }
-
       currentFile = file;
+
       const reader = new FileReader();
-      reader.onload = function(e) {
-        currentImage = e.target.result;
-        previewOriginal.innerHTML = `<img src="${currentImage}" alt="Original">`;
+      reader.onload = ev => {
+        previewDiv.innerHTML = `<img src="${ev.target.result}" alt="Prévia">`;
         processBtn.style.display = 'inline-block';
       };
       reader.readAsDataURL(file);
     }
 
-    // Processar remoção de fundo
     processBtn.addEventListener('click', async () => {
       if (!currentFile) return;
 
-      processBtn.textContent = '⏳ Processando... (pode demorar uns segundos)';
+      errorDiv.textContent = '';
       processBtn.disabled = true;
+      processBtn.textContent = '⏳ Processando... (pode demorar)';
+      statusDiv.textContent = 'Baixando modelo de IA (primeira vez é mais lento)...';
 
       try {
-        // Remove o fundo usando biblioteca client-side
-        const imageBlob = await window.BackgroundRemoval.removeBackground(currentFile);
+        const blob = await removeBackground(currentFile, {
+          model: 'medium',
+          output: { format: 'image/png' }
+        });
 
-        // Cria URL da imagem com fundo removido
-        const transparentUrl = URL.createObjectURL(imageBlob);
+        statusDiv.textContent = 'Aplicando fundo ControlDarkDark...';
 
-        // Cria canvas para colocar o fundo ControlDarkDark
         const img = new Image();
-        img.onload = function() {
+        img.onload = () => {
           const canvas = document.createElement('canvas');
           canvas.width = img.width;
           canvas.height = img.height;
           const ctx = canvas.getContext('2d');
 
-          // Preenche com ControlDarkDark
-          ctx.fillStyle = controlDarkDark;
+          ctx.fillStyle = CONTROL_DARK;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-          // Desenha a imagem sem fundo por cima
           ctx.drawImage(img, 0, 0);
 
           const finalUrl = canvas.toDataURL('image/png');
 
           resultDiv.innerHTML = `
-            <h2>✅ Resultado Final</h2>
+            <h2>✅ Pronto!</h2>
             <img src="${finalUrl}" alt="Resultado">
             <br><br>
             <a href="${finalUrl}" download="imagem-control-dark-dark.png">
               <button>⬇️ Baixar Imagem</button>
             </a>
           `;
+          statusDiv.textContent = '';
+          processBtn.disabled = false;
+          processBtn.textContent = '🔄 Fazer com outra imagem';
         };
-        img.src = transparentUrl;
+        img.src = URL.createObjectURL(blob);
 
-      } catch (error) {
-        console.error(error);
-        alert('Erro ao remover o fundo. Tente com outra imagem ou navegador.');
+      } catch (err) {
+        console.error(err);
+        errorDiv.innerHTML = `❌ Não conseguiu processar a imagem.<br><small>${err.message || 'Tente uma imagem menor ou mais simples.'}</small>`;
+        statusDiv.textContent = '';
+        processBtn.disabled = false;
+        processBtn.textContent = '🔄 Tentar novamente';
       }
-
-      processBtn.textContent = '🔄 Remover Fundo e Colocar ControlDarkDark';
-      processBtn.disabled = false;
     });
   </script>
 </body>
