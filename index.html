@@ -94,7 +94,7 @@
       flex: 1;
     }
 
-    /* Botão com tooltip personalizado */
+    /* Botão */
     .btn {
       padding: 18px 40px;
       font-size: 1.25rem;
@@ -118,30 +118,33 @@
       box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
 
-    /* Tooltip com o link longo */
+    /* Tooltip menor */
     .btn::after {
       content: attr(data-tooltip);
       position: absolute;
-      bottom: 120%;
+      bottom: 110%;
       left: 50%;
       transform: translateX(-50%);
-      background: #1a1a1a;
-      color: #ff6666;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      background: #1f1f1f;
+      color: #ff7777;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s;
+      transition: all 0.25s;
       pointer-events: none;
       z-index: 10;
       border: 1px solid #cc2222;
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .btn:hover::after {
       opacity: 1;
       visibility: visible;
-      bottom: 130%;
+      bottom: 120%;
     }
   </style>
 </head>
@@ -186,7 +189,6 @@
   </div>
 
   <script>
-    // Script do canvas (mantido igual)
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
