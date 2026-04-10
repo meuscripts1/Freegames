@@ -49,12 +49,14 @@
       margin: 0 auto 70px;
       line-height: 1.5;
     }
+
     .boxes {
       display: flex;
       gap: 30px;
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .box {
       flex: 1;
       min-width: 300px;
@@ -94,7 +96,6 @@
       flex: 1;
     }
 
-    /* Botão */
     .btn {
       padding: 18px 40px;
       font-size: 1.25rem;
@@ -118,7 +119,7 @@
       box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
 
-    /* Tooltip menor */
+    /* Tooltip */
     .btn::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -137,14 +138,17 @@
       pointer-events: none;
       z-index: 10;
       border: 1px solid #cc2222;
-      max-width: 420px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
     .btn:hover::after {
       opacity: 1;
       visibility: visible;
       bottom: 120%;
+    }
+
+    /* Nova caixa do grupo - estilizada um pouco diferente para destacar */
+    .group-box {
+      max-width: 370px;
+      margin: 40px auto 0;
     }
   </style>
 </head>
@@ -155,6 +159,7 @@
     <p class="subtitle">
       These games last for 20 days, and after 20 days the site is updated with more games!
     </p>
+
     <div class="boxes">
       <!-- Caixa 1 -->
       <div class="box">
@@ -185,6 +190,16 @@
            data-tooltip="https://www.roblox.com.py/games/113619806046802/Untitled-Game442342342-W-OR-L?privateServerLinkCode=411628427958510410073846518634"
            class="btn" target="_blank">Play Now</a>
       </div>
+    </div>
+
+    <!-- Caixa do Grupo - Abaixo da segunda caixa -->
+    <div class="box group-box">
+      <img src="https://i.imgur.com/8BDa0hN.png" alt="Roblox Group"> 
+      <h3>Roblox Group</h3>
+      <p>Join the group!! (if you want!)</p>
+      <a href="https://is.gd/9XwFip" 
+         data-tooltip="https://www.roblox.com.py/communities/310857172811/wztq1"
+         class="btn" target="_blank">Join the group now!!</a>
     </div>
   </div>
 
