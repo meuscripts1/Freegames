@@ -282,12 +282,13 @@ Join the group now!!
       particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    animate();
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+animate();
+</script>
+
 <script>
 function abrirLink(url) {
   window.open(url, '_blank');
 }
 </script>
-</body>
