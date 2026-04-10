@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bolinhas Vermelhas - Simples</title>
+  <title>Bolinhas Vermelhas</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 
@@ -49,15 +49,13 @@
     h1 {
       font-size: 4.8rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #ff3333, #ff7777);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffffff;
       margin-bottom: 10px;
     }
 
     p {
       font-size: 1.5rem;
-      opacity: 0.85;
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -67,7 +65,7 @@
 
   <div class="content">
     <h1>OlhadinhaDEV</h1>
-    <p>Bolinhas vermelhas caindo suavemente</p>
+    <p>Bolinhas vermelhas descendo</p>
   </div>
 
   <script>
@@ -84,17 +82,17 @@
 
       reset() {
         this.x = Math.random() * width;
-        this.y = Math.random() * -height;     // começa acima da tela
-        this.size = Math.random() * 9 + 5;    // tamanho simples entre 5 e 14
-        this.speed = Math.random() * 2.5 + 1.8; // velocidade constante para baixo
-        this.opacity = Math.random() * 0.6 + 0.5;
+        this.y = Math.random() * -height;        // começa acima da tela
+        this.size = Math.random() * 8 + 6;       // tamanho médio
+        this.speed = Math.random() * 2.8 + 2.2;  // velocidade constante para baixo
+        this.opacity = Math.random() * 0.4 + 0.75; // opacidade boa, sem ser transparente demais
       }
 
       update() {
         this.y += this.speed;
 
-        // Quando a bolinha sai da tela, volta para cima
-        if (this.y > height + 20) {
+        // Reinicia quando sai da tela (mantém quantidade constante)
+        if (this.y > height + 30) {
           this.reset();
         }
       }
@@ -103,11 +101,9 @@
         ctx.save();
         ctx.globalAlpha = this.opacity;
         
-        // Bolinha vermelha simples com leve brilho
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#ff3333';
+        // Vermelho normal, sem brilho exagerado
+        ctx.fillStyle = '#cc2222';   // vermelho normal bonito
 
-        ctx.fillStyle = '#ff4444';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -125,15 +121,16 @@
 
     function initParticles() {
       particles = [];
-      const quantidade = Math.floor(width / 8) + 80; // mais bolinhas em telas maiores
+      // Quantidade boa de bolinhas (ajusta bem em qualquer tela)
+      const quantidade = Math.floor(width / 7) + 90;
       for (let i = 0; i < quantidade; i++) {
         particles.push(new Particle());
       }
     }
 
     function animate() {
-      // Fundo escuro com leve rastro (deixa movimento mais bonito)
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
+      // Limpa completamente o canvas a cada frame (sem trilha)
+      ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, width, height);
 
       particles.forEach(particle => {
