@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OlhadinhaDEV</title>
+  <title>Free Games!</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
 
@@ -46,86 +46,89 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(80px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(80px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: 5rem;
       font-weight: 700;
       color: #ffffff;
       margin-bottom: 20px;
-      animation: fadeInUp 1.8s ease-out 0.3s forwards;
+      animation: fadeInUp 1.8s ease-out 0.2s forwards;
       opacity: 0;
     }
 
     .subtitle {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       opacity: 0.9;
-      margin-bottom: 60px;
-      animation: fadeInUp 1.8s ease-out 0.6s forwards;
+      margin-bottom: 50px;
+      animation: fadeInUp 1.8s ease-out 0.5s forwards;
       opacity: 0;
     }
 
     .boxes {
       display: flex;
-      gap: 25px;
+      gap: 28px;
       width: 100%;
-      max-width: 1100px;
-      animation: fadeInUp 1.8s ease-out 1s forwards;
+      max-width: 1080px;
+      animation: fadeInUp 1.8s ease-out 0.9s forwards;
       opacity: 0;
     }
 
     .box {
       flex: 1;
-      background: rgba(30, 30, 30, 0.85);
-      border: 2px solid #cc2222;
+      background: rgba(20, 20, 20, 0.92);
+      border: 2.5px solid #cc2222;
       border-radius: 20px;
-      padding: 40px 30px;
-      min-height: 320px;
+      padding: 25px;
+      min-height: 360px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       transition: all 0.4s ease;
-      backdrop-filter: blur(8px);
+      overflow: hidden;
     }
 
     .box:hover {
-      transform: translateY(-15px);
-      border-color: #ff4444;
-      background: rgba(40, 40, 40, 0.95);
+      transform: translateY(-12px);
+      border-color: #ff5555;
+      background: rgba(30, 30, 30, 0.95);
+    }
+
+    .box img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      border: 2px solid #cc2222;
     }
 
     .box h3 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
+      font-size: 1.7rem;
       color: #ff6666;
+      margin-bottom: 12px;
     }
 
     .box p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      opacity: 0.85;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      opacity: 0.88;
+      text-align: center;
     }
 
     /* Responsivo */
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .boxes {
         flex-direction: column;
-        gap: 20px;
-      }
-      .box {
-        min-height: 260px;
+        gap: 25px;
       }
       h1 {
-        font-size: 3.2rem;
+        font-size: 3.8rem;
+      }
+      .box {
+        min-height: 340px;
       }
     }
   </style>
@@ -135,21 +138,26 @@
   <canvas id="canvas"></canvas>
 
   <div class="content">
-    <h1>OlhadinhaDEV</h1>
-    <p class="subtitle">Bolinhas vermelhas descendo suavemente</p>
+    <h1>Free Games!</h1>
+    <p class="subtitle">Jogos grátis do Roblox</p>
 
     <div class="boxes">
       <div class="box">
-        <h3>Caixa 1</h3>
-        <p>Primeira seção grande com conteúdo bonito. Aqui você pode colocar qualquer informação importante.</p>
+        <img src="https://i.pinimg.com/736x/0e/23/3f/0e233f51ffbc2e6961eb8138c0a0e36a.jpg" alt="Roblox Game 1">
+        <h3>Aventura no Deserto</h3>
+        <p>Explore montanhas e ruínas antigas em um mundo aberto incrível.</p>
       </div>
+
       <div class="box">
-        <h3>Caixa 2</h3>
-        <p>Segunda seção grande. Perfeita para mostrar serviços, projetos ou destaques.</p>
+        <img src="https://tr.rbxcdn.com/180DAY-Avatar-Headshot-1.png" alt="Roblox Game 2">
+        <h3>Sobrevivência Extrema</h3>
+        <p>Sobreviva às noites perigosas e construa sua base.</p>
       </div>
+
       <div class="box">
-        <h3>Caixa 3</h3>
-        <p>Terceira seção. Use para chamadas de ação, contatos ou mais detalhes.</p>
+        <img src="https://i.pinimg.com/736x/72/70/de/7270de536a97d4d9f93fd1b5bb0b3cf6.jpg" alt="Roblox Game 3">
+        <h3>Mundo dos Construtores</h3>
+        <p>Construa, crie e divirta-se com seus amigos.</p>
       </div>
     </div>
   </div>
@@ -169,23 +177,20 @@
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * -height - 100;
-        this.size = Math.random() * 2.5 + 4;     // bem pequenas e justas
-        this.speed = Math.random() * 2.0 + 1.8;  // descendo suavemente
-        this.opacity = Math.random() * 0.25 + 0.75;
+        this.size = Math.random() * 2.8 + 3.8;     // pequenas e justas
+        this.speed = Math.random() * 2.1 + 1.7;
+        this.opacity = Math.random() * 0.3 + 0.75;
       }
 
       update() {
         this.y += this.speed;
-        if (this.y > height + 40) {
-          this.reset();
-        }
+        if (this.y > height + 40) this.reset();
       }
 
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = '#cc2222';   // vermelho normal
-
+        ctx.fillStyle = '#cc2222';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -202,7 +207,7 @@
 
     function initParticles() {
       particles = [];
-      const quantidade = Math.floor(width / 14) + 35;  // ainda menos bolinhas
+      const quantidade = Math.floor(width / 15) + 32;
       for (let i = 0; i < quantidade; i++) {
         particles.push(new Particle());
       }
