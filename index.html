@@ -3,46 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Games!</title>
+  <title>Sus Games</title>
+
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Poppins', sans-serif;
       background: #0a0a0a;
       color: white;
       min-height: 100vh;
+      overflow-y: auto;
       position: relative;
     }
     canvas {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
       pointer-events: none;
     }
-
     .content {
       position: relative;
       z-index: 2;
       padding: 80px 20px 120px;
-      max-width: 1280px;
+      max-width: 1200px;
       margin: 0 auto;
       text-align: center;
     }
-
     h1 {
-      font-size: 5.2rem;
+      font-size: 5rem;
       font-weight: 700;
+      color: #ffffff;
       margin-bottom: 20px;
       opacity: 0;
       animation: fadeInUp 1.6s ease-out 0.3s forwards;
     }
     .subtitle {
       font-size: 1.35rem;
+      opacity: 0.9;
       max-width: 780px;
       margin: 0 auto 70px;
+      line-height: 1.5;
       opacity: 0;
       animation: fadeInUp 1.6s ease-out 0.7s forwards;
     }
@@ -58,12 +68,15 @@
 
     .box {
       flex: 1;
-      min-width: 320px;
-      max-width: 380px;
+      min-width: 300px;
+      max-width: 370px;
       background: rgba(20, 20, 20, 0.92);
       border: 2.5px solid #cc2222;
       border-radius: 20px;
-      padding: 22px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       transition: all 0.4s ease;
       opacity: 0;
       animation: fadeInUp 1.8s ease-out 1.4s forwards;
@@ -74,11 +87,24 @@
     }
     .box img {
       width: 100%;
-      height: 240px;
+      height: 260px;
       object-fit: cover;
       border-radius: 14px;
       margin-bottom: 20px;
       border: 2px solid #cc2222;
+    }
+    .box h3 {
+      font-size: 1.75rem;
+      color: #ff6666;
+      margin-bottom: 12px;
+    }
+    .box p {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      opacity: 0.88;
+      text-align: center;
+      margin-bottom: 25px;
+      flex: 1;
     }
 
     .btn {
@@ -89,7 +115,9 @@
       color: white;
       border: none;
       border-radius: 12px;
-      width: 90%;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      width: 85%;
       margin-top: auto;
       box-shadow: 0 6px 20px rgba(204, 34, 34, 0.4);
       text-decoration: none;
@@ -99,71 +127,69 @@
     .btn:hover {
       background-color: #ff3333;
       transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
 
-    /* Tooltip menor */
+    /* Tooltip */
     .btn::after {
       content: attr(data-tooltip);
       position: absolute;
-      bottom: 115%;
+      bottom: 110%;
       left: 50%;
       transform: translateX(-50%);
-      background: #1a1a1a;
-      color: #ff8888;
+      background: #1f1f1f;
+      color: #ff7777;
       padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.7rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
-      z-index: 20;
+      transition: all 0.25s;
+      pointer-events: none;
+      z-index: 10;
       border: 1px solid #cc2222;
-      max-width: 85%;
     }
     .btn:hover::after {
       opacity: 1;
       visibility: visible;
-      bottom: 125%;
+      bottom: 120%;
     }
 
-    .group-box {
-      max-width: 300px;
-      margin: 50px auto 0;
-      padding: 20px;
-      opacity: 0;
-      animation: fadeInUp 2.0s ease-out forwards;
-    }
-
+    /* Animação */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(60px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* ==================== CELULAR ==================== */
-    @media (max-width: 768px) {
-      h1 { font-size: 3.4rem; }
-      .subtitle { font-size: 1.15rem; margin-bottom: 50px; }
-      
-      .boxes { gap: 20px; }
-      .box {
-        min-width: 100%;
-        max-width: 100%;
-        padding: 18px;
-      }
-      .box img { height: 210px; }
-      
-      .btn { padding: 16px 30px; font-size: 1.15rem; width: 95%; }
-      
-      .group-box {
-        max-width: 100%;
-        margin: 40px auto 0;
-      }
-      .group-box img { height: 160px !important; }
+    /* Caixa do Grupo - Mais pequena */
+    .group-box {
+      max-width: 280px;
+      margin: 45px auto 0;
+      padding: 18px;
+      opacity: 0;
+      animation: fadeInUp 1.8s ease-out 1.8s forwards;
     }
-
-    @media (max-width: 480px) {
-      .content { padding: 50px 15px 80px; }
-      h1 { font-size: 2.9rem; }
+    .group-box img {
+      height: 180px !important;
+    }
+    .group-box h3 {
+      font-size: 1.55rem;
+    }
+    .group-box p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    .group-box .btn {
+      width: 90%;
+      padding: 15px 30px;
+      font-size: 1.15rem;
     }
   </style>
 </head>
@@ -176,42 +202,54 @@
     </p>
 
     <div class="boxes">
+      <!-- Caixa 1 -->
       <div class="box">
-        <img src="https://i.imgur.com/f1ibehE.png" alt="V4">
+        <img src="https://i.imgur.com/f1ibehE.png" alt="V4 game 18+">
         <h3>V4 game 18+</h3>
         <p>A game that you can play with people who are 18+!</p>
-        <a href="https://is.gd/WBTJxL" data-tooltip="https://www.roblox.com.py/games/116881334009378/V4-2p-775671?privateServerLinkCode=411628427958510410073846518634" class="btn" target="_blank">Play Now</a>
+        <a href="https://is.gd/WBTJxL" 
+           data-tooltip="https://www.roblox.com.py/games/116881334009378/V4-2p-775671?privateServerLinkCode=411628427958510410073846518634"
+           class="btn" target="_blank">Play Now</a>
       </div>
       
+      <!-- Caixa 2 -->
       <div class="box">
-        <img src="https://i.imgur.com/3HGfbVW.png" alt="Sword">
+        <img src="https://i.imgur.com/3HGfbVW.png" alt="Sword Fight Game">
         <h3>Sword Fight Game</h3>
         <p>A sword game where when you kill a sword you can do 18+ things with it!</p>
-        <a href="https://is.gd/J5ApaQ" data-tooltip="https://www.roblox.com.py/games/74538164085210/sword-fighting-347226?privateServerLinkCode=411628427958510410073846518634" class="btn" target="_blank">Play Now</a>
+        <a href="https://is.gd/J5ApaQ" 
+           data-tooltip="https://www.roblox.com.py/games/74538164085210/sword-fighting-347226?privateServerLinkCode=411628427958510410073846518634"
+           class="btn" target="_blank">Play Now</a>
       </div>
       
+      <!-- Caixa 3 -->
       <div class="box">
-        <img src="https://i.imgur.com/8BDa0hN.png" alt="Untitled">
+        <img src="https://i.imgur.com/8BDa0hN.png" alt="Untitled Game">
         <h3>Untitled Game</h3>
         <p>Another 18+ game that ANYONE can play to do 18+ things with other people</p>
-        <a href="https://is.gd/piukAP" data-tooltip="https://www.roblox.com.py/games/113619806046802/Untitled-Game442342342-W-OR-L?privateServerLinkCode=411628427958510410073846518634" class="btn" target="_blank">Play Now</a>
+        <a href="https://is.gd/piukAP" 
+           data-tooltip="https://www.roblox.com.py/games/113619806046802/Untitled-Game442342342-W-OR-L?privateServerLinkCode=411628427958510410073846518634"
+           class="btn" target="_blank">Play Now</a>
       </div>
     </div>
 
+    <!-- Caixa do Grupo -->
     <div class="box group-box">
-      <img src="https://i.imgur.com/LlsTnf9.png" alt="Group">
+      <img src="https://i.imgur.com/cjjsOl5.png" alt="My Group">
       <h3>my group is wztq1</h3>
       <p>Join the group!! (if you want!)</p>
-      <a href="https://is.gd/9XwFip" data-tooltip="https://www.roblox.com.py/communities/310857172811/wztq1" class="btn" target="_blank">Join the group now!!</a>
+      <a href="https://is.gd/9XwFip" 
+         data-tooltip="https://www.roblox.com.py/communities/310857172811/wztq1"
+         class="btn" target="_blank">Join the group now!!</a>
     </div>
   </div>
 
   <script>
-    // Canvas Particles (mantido)
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    let particles = [], width, height;
-    class Particle { /* mesmo código anterior */ 
+    let particles = [];
+    let width, height;
+    class Particle {
       constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * width;
@@ -237,7 +275,8 @@
       canvas.width = width;
       canvas.height = height;
       particles = [];
-      for (let i = 0; i < 60; i++) particles.push(new Particle());
+      const quantidade = Math.floor(width / 14) + 35;
+      for (let i = 0; i < quantidade; i++) particles.push(new Particle());
     }
     function animate() {
       ctx.fillStyle = '#0a0a0a';
