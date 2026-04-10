@@ -82,16 +82,15 @@
 
       reset() {
         this.x = Math.random() * width;
-        this.y = Math.random() * -height;        // começa acima da tela
-        this.size = Math.random() * 8 + 6;       // tamanho médio
-        this.speed = Math.random() * 2.8 + 2.2;  // velocidade constante para baixo
-        this.opacity = Math.random() * 0.4 + 0.75; // opacidade boa, sem ser transparente demais
+        this.y = Math.random() * -height - 50;   // começa bem acima
+        this.size = Math.random() * 3 + 4.5;     // tamanho pequeno e justo (4.5 a 7.5)
+        this.speed = Math.random() * 2.2 + 2.0;  // velocidade suave para baixo
+        this.opacity = Math.random() * 0.3 + 0.8;
       }
 
       update() {
         this.y += this.speed;
 
-        // Reinicia quando sai da tela (mantém quantidade constante)
         if (this.y > height + 30) {
           this.reset();
         }
@@ -101,8 +100,7 @@
         ctx.save();
         ctx.globalAlpha = this.opacity;
         
-        // Vermelho normal, sem brilho exagerado
-        ctx.fillStyle = '#cc2222';   // vermelho normal bonito
+        ctx.fillStyle = '#cc2222';   // vermelho normal
 
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -121,15 +119,15 @@
 
     function initParticles() {
       particles = [];
-      // Quantidade boa de bolinhas (ajusta bem em qualquer tela)
-      const quantidade = Math.floor(width / 7) + 90;
+      // Menos bolinhas agora (reduzido)
+      const quantidade = Math.floor(width / 12) + 45;   // bem menos que antes
       for (let i = 0; i < quantidade; i++) {
         particles.push(new Particle());
       }
     }
 
     function animate() {
-      // Limpa completamente o canvas a cada frame (sem trilha)
+      // Limpa completamente (sem trilha)
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, width, height);
 
