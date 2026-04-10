@@ -17,37 +17,28 @@
       font-family: 'Poppins', sans-serif;
       background: #0a0a0a;
       color: white;
-      overflow: hidden;
-      height: 100vh;
+      min-height: 100vh;           /* ← Mudado para min-height */
+      overflow-y: auto;            /* ← Permite rolar a página */
       position: relative;
     }
 
     canvas {
-      position: absolute;
+      position: fixed;             /* ← fixed para não resetar tanto */
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
+      pointer-events: none;
     }
 
     .content {
       position: relative;
       z-index: 2;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
+      padding: 80px 20px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
       text-align: center;
-      opacity: 0;
-      animation: fadeInUp 1.8s ease-out forwards;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(80px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
@@ -55,36 +46,31 @@
       font-weight: 700;
       color: #ffffff;
       margin-bottom: 20px;
-      animation: fadeInUp 1.8s ease-out 0.2s forwards;
-      opacity: 0;
     }
 
     .subtitle {
       font-size: 1.35rem;
       opacity: 0.9;
       max-width: 780px;
-      margin-bottom: 55px;
+      margin: 0 auto 60px;
       line-height: 1.5;
-      animation: fadeInUp 1.8s ease-out 0.5s forwards;
-      opacity: 0;
     }
 
     .boxes {
       display: flex;
-      gap: 28px;
-      width: 100%;
-      max-width: 1080px;
-      animation: fadeInUp 1.8s ease-out 0.9s forwards;
-      opacity: 0;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .box {
       flex: 1;
+      min-width: 300px;
+      max-width: 360px;
       background: rgba(20, 20, 20, 0.92);
       border: 2.5px solid #cc2222;
       border-radius: 20px;
-      padding: 25px 25px 35px;
-      min-height: 420px;
+      padding: 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -92,14 +78,13 @@
     }
 
     .box:hover {
-      transform: translateY(-12px);
+      transform: translateY(-15px);
       border-color: #ff5555;
-      background: rgba(30, 30, 30, 0.95);
     }
 
     .box img {
       width: 100%;
-      height: 210px;
+      height: 200px;
       object-fit: cover;
       border-radius: 14px;
       margin-bottom: 20px;
@@ -107,7 +92,7 @@
     }
 
     .box h3 {
-      font-size: 1.7rem;
+      font-size: 1.75rem;
       color: #ff6666;
       margin-bottom: 12px;
     }
@@ -121,37 +106,30 @@
       flex: 1;
     }
 
-    /* Botão Cinza com texto quase preto */
+    /* Botão MAIOR e mais visível */
     .btn {
-      padding: 14px 32px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      padding: 18px 40px;
+      font-size: 1.25rem;
+      font-weight: 700;
       background-color: #a0a0a0;
       color: #1c1c1c;
       border: none;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      width: 85%;
+      margin-top: auto;
     }
 
     .btn:hover {
       background-color: #8a8a8a;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
 
     @media (max-width: 920px) {
-      .boxes {
-        flex-direction: column;
-        gap: 25px;
-      }
-      h1 {
-        font-size: 3.8rem;
-      }
-      .subtitle {
-        font-size: 1.25rem;
-      }
+      h1 { font-size: 3.6rem; }
+      .subtitle { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -176,7 +154,7 @@
 
       <!-- Caixa 2 -->
       <div class="box">
-        <img src="https://i.imgur.com/3HGfbVW.png" alt="Roblox Game 2">
+        <img src="https://i.imgur.com/3HGfbVW.png" alt="Sobrevivência Extrema">
         <h3>Sobrevivência Extrema</h3>
         <p>Sobreviva às noites perigosas e construa sua base segura.</p>
         <button class="btn">Play Now</button>
@@ -184,7 +162,7 @@
 
       <!-- Caixa 3 -->
       <div class="box">
-        <img src="https://i.imgur.com/8BDa0hN.png" alt="Roblox Game 3">
+        <img src="https://i.imgur.com/8BDa0hN.png" alt="Mundo dos Construtores">
         <h3>Mundo dos Construtores</h3>
         <p>Construa, crie e divirta-se com seus amigos.</p>
         <button class="btn">Play Now</button>
@@ -233,11 +211,12 @@
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
+      initParticles();        // Recria as partículas quando mudar tamanho (melhor que resetar)
     }
 
     function initParticles() {
       particles = [];
-      const quantidade = Math.floor(width / 15) + 32;
+      const quantidade = Math.floor(width / 14) + 35;
       for (let i = 0; i < quantidade; i++) {
         particles.push(new Particle());
       }
@@ -255,13 +234,9 @@
       requestAnimationFrame(animate);
     }
 
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      initParticles();
-    });
-
+    // Inicialização
+    window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    initParticles();
     animate();
   </script>
 </body>
