@@ -3,137 +3,208 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Remove Fundo + ControlDarkDark</title>
+  <title>OlhadinhaDEV • Universo Vermelho</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #fff; text-align: center; padding: 20px; margin: 0; }
-    .container { max-width: 900px; margin: 0 auto; background: #1a1a1a; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.6); }
-    h1 { margin-bottom: 10px; }
-    .drop-zone {
-      border: 3px dashed #666; padding: 60px 20px; border-radius: 12px; margin: 25px 0;
-      cursor: pointer; transition: all 0.3s; background: #222;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .drop-zone:hover, .drop-zone.dragover { border-color: #00ff9d; background: #2a2a2a; }
-    img { max-width: 100%; max-height: 420px; border-radius: 10px; margin: 15px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-    button {
-      background: #00ff9d; color: #000; border: none; padding: 15px 40px; font-size: 18px;
-      border-radius: 8px; cursor: pointer; margin: 15px 8px;
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
-    button:hover { background: #00cc7a; }
-    button:disabled { background: #555; cursor: not-allowed; }
-    .loading { color: #00ff9d; font-size: 18px; margin: 20px 0; }
-    .error { color: #ff6666; margin: 20px 0; }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+      animation: entrance 1.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes entrance {
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ff3333, #ff6666, #ff9999);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 40px rgba(255, 50, 50, 0.5);
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .btn {
+      padding: 16px 40px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: #ff3333;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-8px) scale(1.05);
+      background: #ff5555;
+      box-shadow: 0 20px 40px rgba(255, 51, 51, 0.6);
+    }
+
+    .section {
+      margin-top: 100px;
+      opacity: 0;
+      animation: entrance 1.5s ease-out 0.6s forwards;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🖼️ Remover Fundo + ControlDarkDark</h1>
-    <p>Arraste ou clique para importar a imagem • Fundo final será <strong>ControlDarkDark</strong></p>
 
-    <div id="dropZone" class="drop-zone">
-      <p><strong>Clique aqui</strong> ou arraste a imagem (PNG ou JPG)</p>
-      <input type="file" id="fileInput" accept="image/*" style="display:none;">
+  <canvas id="canvas"></canvas>
+
+  <div class="content">
+    <h1>OlhadinhaDEV</h1>
+    <p>Explorando o universo com código e criatividade</p>
+    <button class="btn" onclick="alert('Bem-vindo ao meu site animado! 🚀')">Entrar no Universo</button>
+
+    <div class="section">
+      <h2 style="color:#ff6666; font-size:2rem;">Bolhas Vermelhas em Queda Contínua</h2>
+      <p>Quanto mais bolinhas somem embaixo, mais aparecem em cima. Efeito infinito!</p>
     </div>
-
-    <div id="preview"></div>
-    <button id="processBtn" style="display:none;">🔄 Remover Fundo e Aplicar ControlDarkDark</button>
-
-    <div id="status" class="loading"></div>
-    <div id="error" class="error"></div>
-    <div class="result" id="result"></div>
   </div>
 
-  <script type="module">
-    import removeBackground from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.7.0/+esm";
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const processBtn = document.getElementById('processBtn');
-    const previewDiv = document.getElementById('preview');
-    const statusDiv = document.getElementById('status');
-    const errorDiv = document.getElementById('error');
-    const resultDiv = document.getElementById('result');
+    let particles = [];
+    let width, height;
 
-    let currentFile = null;
-    const CONTROL_DARK = '#0a0a0a';
-
-    dropZone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', e => e.target.files[0] && handleFile(e.target.files[0]));
-
-    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', e => {
-      e.preventDefault();
-      dropZone.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
-    });
-
-    function handleFile(file) {
-      errorDiv.textContent = '';
-      if (!file.type.startsWith('image/')) {
-        errorDiv.textContent = '❌ Por favor, selecione uma imagem (PNG ou JPG)';
-        return;
-      }
-      currentFile = file;
-
-      const reader = new FileReader();
-      reader.onload = ev => {
-        previewDiv.innerHTML = `<img src="${ev.target.result}" alt="Prévia">`;
-        processBtn.style.display = 'inline-block';
-      };
-      reader.readAsDataURL(file);
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
     }
 
-    processBtn.addEventListener('click', async () => {
-      if (!currentFile) return;
-
-      errorDiv.textContent = '';
-      processBtn.disabled = true;
-      processBtn.textContent = '⏳ Processando... (pode demorar)';
-      statusDiv.textContent = 'Baixando modelo de IA (primeira vez é mais lento)...';
-
-      try {
-        const blob = await removeBackground(currentFile, {
-          model: 'medium',
-          output: { format: 'image/png' }
-        });
-
-        statusDiv.textContent = 'Aplicando fundo ControlDarkDark...';
-
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-
-          ctx.fillStyle = CONTROL_DARK;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0);
-
-          const finalUrl = canvas.toDataURL('image/png');
-
-          resultDiv.innerHTML = `
-            <h2>✅ Pronto!</h2>
-            <img src="${finalUrl}" alt="Resultado">
-            <br><br>
-            <a href="${finalUrl}" download="imagem-control-dark-dark.png">
-              <button>⬇️ Baixar Imagem</button>
-            </a>
-          `;
-          statusDiv.textContent = '';
-          processBtn.disabled = false;
-          processBtn.textContent = '🔄 Fazer com outra imagem';
-        };
-        img.src = URL.createObjectURL(blob);
-
-      } catch (err) {
-        console.error(err);
-        errorDiv.innerHTML = `❌ Não conseguiu processar a imagem.<br><small>${err.message || 'Tente uma imagem menor ou mais simples.'}</small>`;
-        statusDiv.textContent = '';
-        processBtn.disabled = false;
-        processBtn.textContent = '🔄 Tentar novamente';
+    class Particle {
+      constructor() {
+        this.reset();
       }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height * -0.5; // começa de cima (pode ser negativo)
+        this.size = Math.random() * 8 + 4;        // tamanho entre 4 e 12
+        this.speed = Math.random() * 3 + 1.5;     // velocidade de queda
+        this.opacity = Math.random() * 0.7 + 0.4;
+        this.hueShift = Math.random() * 20 - 10;  // leve variação no vermelho
+      }
+
+      update() {
+        this.y += this.speed;
+
+        // Leve movimento horizontal (balanço)
+        this.x += Math.sin(this.y / 50) * 0.8;
+
+        // Quando sai da tela, reinicia (mantém quantidade constante)
+        if (this.y > height + 20) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = `hsl(0, 100%, ${70 + this.hueShift}%)`; // tons de vermelho brilhante
+
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = '#ff3333';
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Brilho interno
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.beginPath();
+        ctx.arc(this.x - this.size/3, this.y - this.size/3, this.size/3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+    }
+
+    function initParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.12)'; // rastro suave (não apaga totalmente)
+      ctx.fillRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    // Inicializa
+    window.addEventListener('resize', () => {
+      resize();
+      initParticles(180); // ~180 bolinhas (ajuste se quiser mais/menos)
     });
+
+    resize();
+    initParticles(180);
+    animate();
+
+    // Dica: se quiser mais bolinhas, aumente o número em initParticles()
   </script>
 </body>
 </html>
