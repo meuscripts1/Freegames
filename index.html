@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OlhadinhaDEV • Universo Vermelho</title>
+  <title>Bolinhas Vermelhas - Simples</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 
     * {
       margin: 0;
@@ -16,7 +16,7 @@
     body {
       font-family: 'Poppins', sans-serif;
       background: #0a0a0a;
-      color: #fff;
+      color: white;
       overflow: hidden;
       height: 100vh;
       display: flex;
@@ -32,69 +32,32 @@
       width: 100%;
       height: 100%;
       z-index: 1;
-      pointer-events: none;
     }
 
     .content {
       position: relative;
       z-index: 2;
       text-align: center;
-      max-width: 800px;
-      padding: 2rem;
-      animation: entrance 1.5s ease-out forwards;
-      opacity: 0;
+      animation: fadeIn 2s ease-out forwards;
     }
 
-    @keyframes entrance {
-      from {
-        opacity: 0;
-        transform: translateY(60px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: 4.8rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #ff3333, #ff6666, #ff9999);
+      background: linear-gradient(90deg, #ff3333, #ff7777);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 40px rgba(255, 50, 50, 0.5);
+      margin-bottom: 10px;
     }
 
     p {
-      font-size: 1.4rem;
-      margin-bottom: 2.5rem;
-      opacity: 0.9;
-    }
-
-    .btn {
-      padding: 16px 40px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      background: #ff3333;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
-    }
-
-    .btn:hover {
-      transform: translateY(-8px) scale(1.05);
-      background: #ff5555;
-      box-shadow: 0 20px 40px rgba(255, 51, 51, 0.6);
-    }
-
-    .section {
-      margin-top: 100px;
-      opacity: 0;
-      animation: entrance 1.5s ease-out 0.6s forwards;
+      font-size: 1.5rem;
+      opacity: 0.85;
     }
   </style>
 </head>
@@ -104,13 +67,7 @@
 
   <div class="content">
     <h1>OlhadinhaDEV</h1>
-    <p>Explorando o universo com código e criatividade</p>
-    <button class="btn" onclick="alert('Bem-vindo ao meu site animado! 🚀')">Entrar no Universo</button>
-
-    <div class="section">
-      <h2 style="color:#ff6666; font-size:2rem;">Bolhas Vermelhas em Queda Contínua</h2>
-      <p>Quanto mais bolinhas somem embaixo, mais aparecem em cima. Efeito infinito!</p>
-    </div>
+    <p>Bolinhas vermelhas caindo suavemente</p>
   </div>
 
   <script>
@@ -120,13 +77,6 @@
     let particles = [];
     let width, height;
 
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
-
     class Particle {
       constructor() {
         this.reset();
@@ -134,20 +84,16 @@
 
       reset() {
         this.x = Math.random() * width;
-        this.y = Math.random() * height * -0.5; // começa de cima (pode ser negativo)
-        this.size = Math.random() * 8 + 4;        // tamanho entre 4 e 12
-        this.speed = Math.random() * 3 + 1.5;     // velocidade de queda
-        this.opacity = Math.random() * 0.7 + 0.4;
-        this.hueShift = Math.random() * 20 - 10;  // leve variação no vermelho
+        this.y = Math.random() * -height;     // começa acima da tela
+        this.size = Math.random() * 9 + 5;    // tamanho simples entre 5 e 14
+        this.speed = Math.random() * 2.5 + 1.8; // velocidade constante para baixo
+        this.opacity = Math.random() * 0.6 + 0.5;
       }
 
       update() {
         this.y += this.speed;
 
-        // Leve movimento horizontal (balanço)
-        this.x += Math.sin(this.y / 50) * 0.8;
-
-        // Quando sai da tela, reinicia (mantém quantidade constante)
+        // Quando a bolinha sai da tela, volta para cima
         if (this.y > height + 20) {
           this.reset();
         }
@@ -156,55 +102,57 @@
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = `hsl(0, 100%, ${70 + this.hueShift}%)`; // tons de vermelho brilhante
-
-        ctx.shadowBlur = 25;
+        
+        // Bolinha vermelha simples com leve brilho
+        ctx.shadowBlur = 15;
         ctx.shadowColor = '#ff3333';
 
+        ctx.fillStyle = '#ff4444';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Brilho interno
-        ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.beginPath();
-        ctx.arc(this.x - this.size/3, this.y - this.size/3, this.size/3, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
       }
     }
 
-    function initParticles(count) {
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    function initParticles() {
       particles = [];
-      for (let i = 0; i < count; i++) {
+      const quantidade = Math.floor(width / 8) + 80; // mais bolinhas em telas maiores
+      for (let i = 0; i < quantidade; i++) {
         particles.push(new Particle());
       }
     }
 
     function animate() {
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.12)'; // rastro suave (não apaga totalmente)
+      // Fundo escuro com leve rastro (deixa movimento mais bonito)
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
       ctx.fillRect(0, 0, width, height);
 
-      particles.forEach(p => {
-        p.update();
-        p.draw();
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
       });
 
       requestAnimationFrame(animate);
     }
 
-    // Inicializa
+    // Inicialização
     window.addEventListener('resize', () => {
-      resize();
-      initParticles(180); // ~180 bolinhas (ajuste se quiser mais/menos)
+      resizeCanvas();
+      initParticles();
     });
 
-    resize();
-    initParticles(180);
+    resizeCanvas();
+    initParticles();
     animate();
-
-    // Dica: se quiser mais bolinhas, aumente o número em initParticles()
   </script>
 </body>
 </html>
