@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sus Games</title>
-
-  <link rel="icon" href="icon.ico" type="image/x-icon">
-  
+  <title>Free Games!</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
     * {
@@ -39,6 +36,7 @@
       margin: 0 auto;
       text-align: center;
     }
+
     h1 {
       font-size: 5rem;
       font-weight: 700;
@@ -130,33 +128,49 @@
       box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
 
-    /* Tooltip */
+    /* Tooltip menor e ajustada */
     .btn::after {
       content: attr(data-tooltip);
       position: absolute;
-      bottom: 110%;
+      bottom: 115%;
       left: 50%;
       transform: translateX(-50%);
-      background: #1f1f1f;
-      color: #ff7777;
-      padding: 5px 10px;
+      background: #1a1a1a;
+      color: #ff8888;
+      padding: 4px 9px;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       white-space: nowrap;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.25s;
+      transition: all 0.2s;
       pointer-events: none;
-      z-index: 10;
+      z-index: 20;
       border: 1px solid #cc2222;
+      max-width: 380px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .btn:hover::after {
       opacity: 1;
       visibility: visible;
-      bottom: 120%;
+      bottom: 125%;
     }
 
-    /* Animação */
+    .group-box {
+      max-width: 280px;
+      margin: 50px auto 0;
+      padding: 18px;
+      opacity: 0;
+      animation: fadeInUp 1.8s ease-out 2.0s forwards;
+    }
+    .group-box img {
+      height: 180px !important;
+    }
+    .group-box h3 {
+      font-size: 1.55rem;
+    }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -166,30 +180,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    /* Caixa do Grupo - Mais pequena */
-    .group-box {
-      max-width: 280px;
-      margin: 45px auto 0;
-      padding: 18px;
-      opacity: 0;
-      animation: fadeInUp 1.8s ease-out 1.8s forwards;
-    }
-    .group-box img {
-      height: 180px !important;
-    }
-    .group-box h3 {
-      font-size: 1.55rem;
-    }
-    .group-box p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
-    .group-box .btn {
-      width: 90%;
-      padding: 15px 30px;
-      font-size: 1.15rem;
     }
   </style>
 </head>
@@ -235,7 +225,7 @@
 
     <!-- Caixa do Grupo -->
     <div class="box group-box">
-      <img src="https://i.imgur.com/cjjsOl5.png" alt="My Group">
+      <img src="https://i.imgur.com/LlsTnf9.png" alt="My Group">
       <h3>my group is wztq1</h3>
       <p>Join the group!! (if you want!)</p>
       <a href="https://is.gd/9XwFip" 
