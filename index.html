@@ -82,12 +82,11 @@
       border: 2.5px solid #cc2222;
       border-radius: 20px;
       padding: 25px;
-      min-height: 360px;
+      min-height: 380px;
       display: flex;
       flex-direction: column;
       align-items: center;
       transition: all 0.4s ease;
-      overflow: hidden;
     }
 
     .box:hover {
@@ -118,7 +117,6 @@
       text-align: center;
     }
 
-    /* Responsivo */
     @media (max-width: 920px) {
       .boxes {
         flex-direction: column;
@@ -126,9 +124,6 @@
       }
       h1 {
         font-size: 3.8rem;
-      }
-      .box {
-        min-height: 340px;
       }
     }
   </style>
@@ -142,20 +137,23 @@
     <p class="subtitle">Jogos grátis do Roblox</p>
 
     <div class="boxes">
+      <!-- Caixa 1 -->
       <div class="box">
-        <img src="https://i.pinimg.com/736x/0e/23/3f/0e233f51ffbc2e6961eb8138c0a0e36a.jpg" alt="Roblox Game 1">
+        <img src="https://i.imgur.com/f1ibehE.png" alt="Roblox Game 1">
         <h3>Aventura no Deserto</h3>
-        <p>Explore montanhas e ruínas antigas em um mundo aberto incrível.</p>
+        <p>Explore montanhas, pontes e ruínas em um mundo aberto incrível.</p>
       </div>
 
+      <!-- Caixa 2 -->
       <div class="box">
-        <img src="https://tr.rbxcdn.com/180DAY-Avatar-Headshot-1.png" alt="Roblox Game 2">
+        <img src="https://i.imgur.com/3HGfbVW.png" alt="Roblox Game 2">
         <h3>Sobrevivência Extrema</h3>
-        <p>Sobreviva às noites perigosas e construa sua base.</p>
+        <p>Sobreviva às noites perigosas e construa sua base segura.</p>
       </div>
 
+      <!-- Caixa 3 -->
       <div class="box">
-        <img src="https://i.pinimg.com/736x/72/70/de/7270de536a97d4d9f93fd1b5bb0b3cf6.jpg" alt="Roblox Game 3">
+        <img src="https://i.imgur.com/8BDa0hN.png" alt="Roblox Game 3">
         <h3>Mundo dos Construtores</h3>
         <p>Construa, crie e divirta-se com seus amigos.</p>
       </div>
@@ -177,7 +175,7 @@
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * -height - 100;
-        this.size = Math.random() * 2.8 + 3.8;     // pequenas e justas
+        this.size = Math.random() * 2.8 + 3.8;
         this.speed = Math.random() * 2.1 + 1.7;
         this.opacity = Math.random() * 0.3 + 0.75;
       }
