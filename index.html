@@ -90,13 +90,16 @@
       border-color: #ff5555;
     }
 
+    /* Imagens corrigidas - mostram a foto inteira */
     .box img {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: auto;                    /* ← Altura automática */
+      max-height: 220px;               /* ← Limite máximo para não ficar gigante */
+      object-fit: contain;             /* ← Mostra a imagem inteira sem cortar */
       border-radius: 14px;
       margin-bottom: 20px;
       border: 2px solid #cc2222;
+      background: #1a1a1a;
     }
 
     .box h3 {
@@ -114,7 +117,6 @@
       flex: 1;
     }
 
-    /* Botão novo - Vermelho que combina com o site */
     .btn {
       padding: 18px 40px;
       font-size: 1.25rem;
@@ -164,7 +166,6 @@
     </p>
 
     <div class="boxes">
-      <!-- Caixa 1 -->
       <div class="box">
         <img src="https://i.imgur.com/f1ibehE.png" alt="V4 game 18+">
         <h3>V4 game 18+</h3>
@@ -172,7 +173,6 @@
         <button class="btn">Play Now</button>
       </div>
 
-      <!-- Caixa 2 -->
       <div class="box">
         <img src="https://i.imgur.com/3HGfbVW.png" alt="Sobrevivência Extrema">
         <h3>Sobrevivência Extrema</h3>
@@ -180,7 +180,6 @@
         <button class="btn">Play Now</button>
       </div>
 
-      <!-- Caixa 3 -->
       <div class="box">
         <img src="https://i.imgur.com/8BDa0hN.png" alt="Mundo dos Construtores">
         <h3>Mundo dos Construtores</h3>
