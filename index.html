@@ -6,13 +6,11 @@
   <title>Free Games!</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
       background: #0a0a0a;
@@ -21,7 +19,6 @@
       overflow-y: auto;
       position: relative;
     }
-
     canvas {
       position: fixed;
       top: 0;
@@ -31,7 +28,6 @@
       z-index: 1;
       pointer-events: none;
     }
-
     .content {
       position: relative;
       z-index: 2;
@@ -40,7 +36,6 @@
       margin: 0 auto;
       text-align: center;
     }
-
     h1 {
       font-size: 5rem;
       font-weight: 700;
@@ -49,7 +44,6 @@
       opacity: 0;
       animation: fadeInUp 1.6s ease-out 0.3s forwards;
     }
-
     .subtitle {
       font-size: 1.35rem;
       opacity: 0.9;
@@ -59,7 +53,6 @@
       opacity: 0;
       animation: fadeInUp 1.6s ease-out 0.7s forwards;
     }
-
     .boxes {
       display: flex;
       gap: 30px;
@@ -68,7 +61,6 @@
       opacity: 0;
       animation: fadeInUp 1.6s ease-out 1.1s forwards;
     }
-
     .box {
       flex: 1;
       min-width: 300px;
@@ -84,29 +76,24 @@
       opacity: 0;
       animation: fadeInUp 1.8s ease-out 1.4s forwards;
     }
-
     .box:hover {
       transform: translateY(-15px);
       border-color: #ff5555;
     }
-
-    /* Imagens maiores e bonitas dentro da caixa */
     .box img {
       width: 100%;
-      height: 260px;                   /* Aumentado */
-      object-fit: cover;               /* Preenche bem a área */
+      height: 260px;
+      object-fit: cover;
       border-radius: 14px;
       margin-bottom: 20px;
       border: 2px solid #cc2222;
       background: #1a1a1a;
     }
-
     .box h3 {
       font-size: 1.75rem;
       color: #ff6666;
       margin-bottom: 12px;
     }
-
     .box p {
       font-size: 1.05rem;
       line-height: 1.55;
@@ -115,7 +102,6 @@
       margin-bottom: 25px;
       flex: 1;
     }
-
     .btn {
       padding: 18px 40px;
       font-size: 1.25rem;
@@ -130,13 +116,11 @@
       margin-top: auto;
       box-shadow: 0 6px 20px rgba(204, 34, 34, 0.4);
     }
-
     .btn:hover {
       background-color: #ff3333;
       transform: translateY(-5px);
       box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
-
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -147,7 +131,6 @@
         transform: translateY(0);
       }
     }
-
     @media (max-width: 920px) {
       h1 { font-size: 3.6rem; }
       .subtitle { font-size: 1.2rem; }
@@ -156,30 +139,30 @@
   </style>
 </head>
 <body>
-
   <canvas id="canvas"></canvas>
-
   <div class="content">
     <h1>Free Games!</h1>
     <p class="subtitle">
       These games last for 20 days, and after 20 days the site is updated with more games!
     </p>
-
     <div class="boxes">
+      <!-- Caixa 1 -->
       <div class="box">
         <img src="https://i.imgur.com/f1ibehE.png" alt="V4 game 18+">
         <h3>V4 game 18+</h3>
         <p>A game that you can play with people who are 18+!</p>
         <button class="btn">Play Now</button>
       </div>
-
+      
+      <!-- Caixa 2 - Texto alterado -->
       <div class="box">
-        <img src="https://i.imgur.com/3HGfbVW.png" alt="Sobrevivência Extrema">
-        <h3>Sobrevivência Extrema</h3>
-        <p>Sobreviva às noites perigosas e construa sua base segura.</p>
+        <img src="https://i.imgur.com/3HGfbVW.png" alt="Sword Fight Game">
+        <h3>Sword Fight Game</h3>
+        <p>A sword game where when you kill a sword you can do 18+ things with it!</p>
         <button class="btn">Play Now</button>
       </div>
-
+      
+      <!-- Caixa 3 -->
       <div class="box">
         <img src="https://i.imgur.com/8BDa0hN.png" alt="Mundo dos Construtores">
         <h3>Mundo dos Construtores</h3>
@@ -192,15 +175,12 @@
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-
     let particles = [];
     let width, height;
-
     class Particle {
       constructor() {
         this.reset();
       }
-
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * -height - 100;
@@ -208,12 +188,10 @@
         this.speed = Math.random() * 2.1 + 1.7;
         this.opacity = Math.random() * 0.3 + 0.75;
       }
-
       update() {
         this.y += this.speed;
         if (this.y > height + 40) this.reset();
       }
-
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
@@ -224,7 +202,6 @@
         ctx.restore();
       }
     }
-
     function resizeCanvas() {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -232,7 +209,6 @@
       canvas.height = height;
       initParticles();
     }
-
     function initParticles() {
       particles = [];
       const quantidade = Math.floor(width / 14) + 35;
@@ -240,19 +216,15 @@
         particles.push(new Particle());
       }
     }
-
     function animate() {
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, width, height);
-
       particles.forEach(p => {
         p.update();
         p.draw();
       });
-
       requestAnimationFrame(animate);
     }
-
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     animate();
