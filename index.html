@@ -295,6 +295,25 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     animate();
-  </script>
+<script>
+document.addEventListener("keydown",function(e){
+if(e.key==="F12"){e.preventDefault();window.blur();}
+if(e.ctrlKey&&e.shiftKey){
+let k=e.key.toLowerCase();
+if(k==="i"||k==="j"||k==="c"){e.preventDefault();window.blur();}
+}
+if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();window.blur();}
+});
+document.addEventListener("contextmenu",function(e){e.preventDefault();});
+setInterval(function(){
+let w=window.outerWidth-window.innerWidth;
+let h=window.outerHeight-window.innerHeight;
+if(w>150||h>150){
+window.blur();
+window.location.href="about:blank";
+}
+},1000);
+setInterval(function(){debugger;},200);
+</script>
 </body>
 </html>
