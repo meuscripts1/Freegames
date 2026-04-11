@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sus Games Roblox!</title>
-  
   <link rel="icon" href="favicon.ico" type="image/x-icon">
  
   <style>
@@ -295,24 +294,6 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     animate();
-<script>
-document.addEventListener("keydown",function(e){
-if(e.key==="F12"){e.preventDefault();window.blur();}
-if(e.ctrlKey&&e.shiftKey){
-let k=e.key.toLowerCase();
-if(k==="i"||k==="j"||k==="c"){e.preventDefault();window.blur();}
-}
-if(e.ctrlKey&&e.key.toLowerCase()==="u"){e.preventDefault();window.blur();}
-});
-document.addEventListener("contextmenu",function(e){e.preventDefault();});
-setInterval(function(){
-let w=window.outerWidth-window.innerWidth;
-let h=window.outerHeight-window.innerHeight;
-if(w>150||h>150){
-window.blur();
-}
-},1000);
-setInterval(function(){debugger;},200);
-</script>
+  </script>
 </body>
 </html>
