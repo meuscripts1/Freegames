@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sus Games Roblox!</title>
-
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+ 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
     * {
@@ -153,8 +153,6 @@
       visibility: visible;
       bottom: 125%;
     }
-
-    /* Texto Follow me - adicionado de forma bonita */
     .follow-text {
       margin: 60px auto 30px;
       font-size: 1.5rem;
@@ -169,7 +167,6 @@
     .follow-text a:hover {
       color: #55ccff;
     }
-
     .group-box {
       max-width: 280px;
       margin: 50px auto 0;
@@ -183,7 +180,6 @@
     .group-box h3 {
       font-size: 1.55rem;
     }
-
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -204,7 +200,6 @@
       These games last for 20 days, and after 20 days the site is updated with more games!
     </p>
     <div class="boxes">
-      <!-- Caixa 1 -->
       <div class="box">
         <img src="https://i.imgur.com/f1ibehE.png" alt="V4 game 18+">
         <h3>V4 game 18+</h3>
@@ -213,8 +208,7 @@
            data-tooltip="https://www.roblox.com.py/games/116881334009378/V4-2p-775671?privateServerLinkCode=411628427958510410073846518634"
            class="btn" target="_blank">Play Now</a>
       </div>
-     
-      <!-- Caixa 2 -->
+    
       <div class="box">
         <img src="https://i.imgur.com/3HGfbVW.png" alt="Sword Fight Game">
         <h3>Sword Fight Game</h3>
@@ -223,8 +217,7 @@
            data-tooltip="https://www.roblox.com.py/games/74538164085210/sword-fighting-347226?privateServerLinkCode=411628427958510410073846518634"
            class="btn" target="_blank">Play Now</a>
       </div>
-     
-      <!-- Caixa 3 -->
+    
       <div class="box">
         <img src="https://i.imgur.com/8BDa0hN.png" alt="Untitled Game">
         <h3>Untitled Game</h3>
@@ -235,7 +228,6 @@
       </div>
     </div>
 
-    <!-- Caixa do Grupo -->
     <div class="box group-box">
       <img src="https://i.imgur.com/cjjsOl5.png" alt="My Group">
       <h3>my group is wztq1</h3>
@@ -245,7 +237,6 @@
          class="btn" target="_blank">Join the group now!!</a>
     </div>
 
-    <!-- Texto Follow me com o link -->
     <div class="follow-text">
       Follow me on Roblox!!
       <a href="https://is.gd/hwRl26" target="_blank">
@@ -269,9 +260,9 @@
         this.speed = Math.random() * 2.1 + 1.7;
         this.opacity = Math.random() * 0.3 + 0.75;
       }
-      update() { 
-        this.y += this.speed; 
-        if (this.y > height + 40) this.reset(); 
+      update() {
+        this.y += this.speed;
+        if (this.y > height + 40) this.reset();
       }
       draw() {
         ctx.save();
