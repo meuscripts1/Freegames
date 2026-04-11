@@ -123,7 +123,6 @@
       transform: translateY(-5px);
       box-shadow: 0 12px 30px rgba(204, 34, 34, 0.6);
     }
-    /* Tooltip menor e ajustada */
     .btn::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -151,6 +150,23 @@
       visibility: visible;
       bottom: 125%;
     }
+
+    /* Texto Follow me - adicionado de forma bonita */
+    .follow-text {
+      margin: 60px auto 30px;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: fadeInUp 1.8s ease-out 2.3s forwards;
+    }
+    .follow-text a {
+      color: #00aaff;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    .follow-text a:hover {
+      color: #55ccff;
+    }
+
     .group-box {
       max-width: 280px;
       margin: 50px auto 0;
@@ -164,6 +180,7 @@
     .group-box h3 {
       font-size: 1.55rem;
     }
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -214,6 +231,7 @@
            class="btn" target="_blank">Play Now</a>
       </div>
     </div>
+
     <!-- Caixa do Grupo -->
     <div class="box group-box">
       <img src="https://i.imgur.com/cjjsOl5.png" alt="My Group">
@@ -223,12 +241,22 @@
          data-tooltip="https://www.roblox.com.py/communities/310857172811/wztq1"
          class="btn" target="_blank">Join the group now!!</a>
     </div>
+
+    <!-- Texto Follow me com o link -->
+    <div class="follow-text">
+      Follow me on Roblox!!
+      <a href="https://is.gd/hwRl26" target="_blank">
+        https://www.roblox.com.py/users/310857172811/profile
+      </a>
+    </div>
   </div>
+
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
     let width, height;
+
     class Particle {
       constructor() { this.reset(); }
       reset() {
@@ -238,7 +266,10 @@
         this.speed = Math.random() * 2.1 + 1.7;
         this.opacity = Math.random() * 0.3 + 0.75;
       }
-      update() { this.y += this.speed; if (this.y > height + 40) this.reset(); }
+      update() { 
+        this.y += this.speed; 
+        if (this.y > height + 40) this.reset(); 
+      }
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
@@ -249,6 +280,7 @@
         ctx.restore();
       }
     }
+
     function resizeCanvas() {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -258,12 +290,14 @@
       const quantidade = Math.floor(width / 14) + 35;
       for (let i = 0; i < quantidade; i++) particles.push(new Particle());
     }
+
     function animate() {
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, width, height);
       particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
+
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     animate();
